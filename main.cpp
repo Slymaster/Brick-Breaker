@@ -1,5 +1,7 @@
 #include "./libs.hh"
 
+
+
 int main()
 {
     //paddle props:
@@ -15,22 +17,22 @@ int main()
     sf::Font font;
     sf::RenderTexture texture;
 
-    if(!font.loadFromFile("./asset/arial.ttf"))
+    /*if(!font.loadFromFile("./asset/arial.ttf"))
     {
         std::cerr << "error loading font " << std::endl;
         return -1;
     }
 
-    text.setFont(font);
+    text.setFont(font);*/
 
     //Create window
     sf::RenderWindow window(sf::VideoMode (644,480), "Brick breaker");
+    
+    window.setPosition(sf::Vector2i(120,50));
 
     //Create entity (brick, ball, paddle)
     sf::RectangleShape bricks[500];
     sf::CircleShape ball(10);
-
-    //Ball ball;
 
     sf::RectangleShape paddle(sf::Vector2f(60, 10));
 
@@ -223,16 +225,16 @@ int main()
             ballSpeed.y = - ballSpeed.y;
             ball.setPosition(paddle.getPosition());
 
-            while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            /*while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                text.setString("toto");
+                text.setString("vous êtes sortit de la zone de jeux");
                 text.setCharacterSize(30);
                 text.setStyle(sf::Text::Bold);
                 text.setFillColor(sf::Color::Green);
                 text.setPosition(x_ini, y_ini);
                 
                 window.draw(text);
-            }
+            }*/
             
         }
 
