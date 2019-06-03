@@ -1,4 +1,5 @@
-#include "./libs.hh"
+#include "Libs.hh"
+#include "Text.hh"
 
 int main()
 {
@@ -11,19 +12,24 @@ int main()
     float x_ini, y_ini;
 
     //Text game state:
-    sf::Text text;
-    sf::Font font;
+
     sf::RenderTexture texture;
 
     //clock
     sf::Clock clock;
 
+    // Text
+    sf::Text text;
+    sf::Font font;  
+
+    // Chargement du fichier .ttf
     if(!font.loadFromFile("./asset/font/arial.ttf"))
     {
         std::cerr << "error loading font " << std::endl;
         return -1;
     }
 
+    // Configuration du texte (FPS)
     text.setFont( font );
     // in pixels, not points!
     text.setCharacterSize( 32 );
@@ -31,7 +37,6 @@ int main()
     text.setStyle( sf::Text::Style::Bold);
     text.setOutlineColor( sf::Color::Yellow );
     text.setPosition(5,5);
-
 
     //Create window
     sf::RenderWindow window(sf::VideoMode (644,480), "Brick breaker");
