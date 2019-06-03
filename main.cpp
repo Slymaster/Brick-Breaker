@@ -1,7 +1,5 @@
 #include "./libs.hh"
 
-
-
 int main()
 {
     //paddle props:
@@ -17,13 +15,23 @@ int main()
     sf::Font font;
     sf::RenderTexture texture;
 
-    /*if(!font.loadFromFile("./asset/arial.ttf"))
+    //clock
+    sf::Clock clock;
+
+    if(!font.loadFromFile("./asset/font/arial.ttf"))
     {
         std::cerr << "error loading font " << std::endl;
         return -1;
     }
 
-    text.setFont(font);*/
+    text.setFont( font );
+    // in pixels, not points!
+    text.setCharacterSize( 32 );
+    text.setFillColor( sf::Color::White );
+    text.setStyle( sf::Text::Style::Bold);
+    text.setOutlineColor( sf::Color::Yellow );
+    text.setPosition(5,5);
+
 
     //Create window
     sf::RenderWindow window(sf::VideoMode (644,480), "Brick breaker");
@@ -165,7 +173,6 @@ int main()
 
     }
 
-
     ball.setPosition(paddle.getPosition()); 
 
     //game loop:
@@ -202,7 +209,20 @@ int main()
             }
         }
 
+        // update the game
+        
+        
+        
 
+        //FPS frame per second (Le nombre d'images par seconde)
+        sf::Time time = clock.getElapsedTime();
+        float fps = 1.0f / time.asSeconds();
+
+        text.setString( "FPS: "+std::to_string(fps) );
+
+        clock.restart().asSeconds();
+
+        window.clear();
         //Detect ball and brick collision
         for (int i = 0; i < 500; i++)
         {
@@ -225,16 +245,14 @@ int main()
             ballSpeed.y = - ballSpeed.y;
             ball.setPosition(paddle.getPosition());
 
-            /*while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            {
-                text.setString("vous êtes sortit de la zone de jeux");
-                text.setCharacterSize(30);
-                text.setStyle(sf::Text::Bold);
-                text.setFillColor(sf::Color::Green);
-                text.setPosition(x_ini, y_ini);
-                
-                window.draw(text);
-            }*/
+            // while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            // {
+            //     text.setString("vous êtes sortit de la zone de jeux");
+            //     text.setCharacterSize(30);
+            //     text.setStyle(sf::Text::Bold);
+            //     text.setFillColor(sf::Color::Green);
+            //     text.setPosition(x_ini, y_ini);
+            // }
             
         }
 
@@ -270,6 +288,7 @@ int main()
 
         window.draw(paddle);
         window.draw(ball);
+        window.draw(text);
         window.display();
     }
 }
