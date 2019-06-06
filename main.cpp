@@ -1,5 +1,5 @@
 #include "Libs.hh"
-#include "Text.hh"
+//#include "Text.hh"
 
 int main()
 {
@@ -243,23 +243,25 @@ int main()
         //Detect collision between ball  the game field border
         if(borderTop.getGlobalBounds().intersects(ball.getGlobalBounds()))
             ballSpeed.y = - ballSpeed.y;
-        
 
         if(borderBottom.getGlobalBounds().intersects(ball.getGlobalBounds()))
         {
             ballSpeed.y = - ballSpeed.y;
             ball.setPosition(paddle.getPosition());
 
-            // while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            // {
-            //     text.setString("vous êtes sortit de la zone de jeux");
-            //     text.setCharacterSize(30);
-            //     text.setStyle(sf::Text::Bold);
-            //     text.setFillColor(sf::Color::Green);
-            //     text.setPosition(x_ini, y_ini);
-            // }
+             while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+             {
+                 text.setString("Game over ! \n Press space to continue");
+                 text.setCharacterSize(30);
+                 text.setStyle(sf::Text::Bold);
+                 text.setFillColor(sf::Color::Magenta);
+                 text.setPosition(120, 100);
+                 window.draw(text);
+                 window.display();
+             }
             
         }
+        
 
         if(borderLeft.getGlobalBounds().intersects(ball.getGlobalBounds()))
             ballSpeed.x = - ballSpeed.x;
@@ -294,6 +296,7 @@ int main()
         window.draw(paddle);
         window.draw(ball);
         window.draw(text);
+        
         window.display();
     }
 }
