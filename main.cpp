@@ -47,7 +47,7 @@ int main()
     score.setCharacterSize(32);
     score.setFillColor(sf::Color::White);
     score.setStyle(sf::Text::Style::Bold);
-    score.setPosition(20, 20);
+    score.setPosition(20, 250);
     std::string scoreStr;
 
     //Create window
@@ -252,7 +252,6 @@ int main()
                 i = 499;
                 game->setScore(5);
                 scoreStr = std::to_string(game->getScore());
-                score.setString("Score: "+scoreStr);
             }
         }
 
@@ -265,16 +264,19 @@ int main()
             ballSpeed.y = - ballSpeed.y;
             ball.setPosition(paddle.getPosition());
 
-             while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-             {
-                 text.setString("Game over ! \n Press space to continue");
-                 text.setCharacterSize(30);
-                 text.setStyle(sf::Text::Bold);
-                 text.setFillColor(sf::Color::Magenta);
-                 text.setPosition(120, 100);
-                 window.draw(text);
-                 window.display();
-             }
+            game->setScore(-game->getScore());//RAZ of score substract of the actual score
+            scoreStr = std::to_string(game->getScore());
+
+            while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                text.setString("Game over ! \n Press space to continue");
+                text.setCharacterSize(30);
+                text.setStyle(sf::Text::Bold);
+                text.setFillColor(sf::Color::Magenta);
+                text.setPosition(120, 100);
+                window.draw(text);
+                window.display();
+            }
             
         }
         
@@ -302,6 +304,8 @@ int main()
 
         for (int i = 0; i < 500; i++)
             window.draw(bricks[i]);
+
+        score.setString("Score: "+scoreStr);
         
 
         window.draw(borderTop);
