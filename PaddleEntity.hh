@@ -3,10 +3,10 @@
 
 #include "Entity.hh"
 
-class Paddle : public Entity
+class PaddleEntity : public Entity
 {
 public:
-    Paddle(); // constructeur
+    PaddleEntity(); // constructeur
 
     void Update();
     void Draw();
