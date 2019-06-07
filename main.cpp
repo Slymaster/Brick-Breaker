@@ -1,12 +1,12 @@
 #include "Libs.hh"
+#include "CustomText.hh"
 #include "GameEntity.hh"
 #include <memory>
-//#include "Text.hh"
 
 int main()
 {
     //game instance:
-    std::unique_ptr<GameEntity> game(new GameEntity()); 
+    std::unique_ptr<GameEntity> game(new GameEntity());
 
     //paddle props:
     float stepx = 10;
@@ -24,8 +24,8 @@ int main()
     sf::Clock clock;
 
     // Text
-    sf::Text text, score;
-    sf::Font font;  
+    sf::Text main_text, score_text;
+    sf::Font font;
 
     // Chargement du fichier .ttf
     if(!font.loadFromFile("./asset/font/arial.ttf"))
@@ -34,25 +34,17 @@ int main()
         return -1;
     }
 
-    // Config txt (FPS)
-    text.setFont( font );
-    text.setCharacterSize( 32 );
-    text.setFillColor( sf::Color::White );
-    text.setStyle( sf::Text::Style::Bold);
-    text.setOutlineColor( sf::Color::Yellow );
-    text.setPosition(5,5);
+    CustomText main(main_text,font);
+    CustomText score(score_text,font);
 
-    //config txt score:
-    score.setFont(font);
-    score.setCharacterSize(32);
-    score.setFillColor(sf::Color::White);
-    score.setStyle(sf::Text::Style::Bold);
-    score.setPosition(20, 250);
+    main_text.setPosition(20,5);
+    score_text.setPosition(20,40);
     std::string scoreStr;
+
 
     //Create window
     sf::RenderWindow window(sf::VideoMode (644,480), "Brick breaker");
-    
+
     window.setPosition(sf::Vector2i(120,50));
 
     //Create entity (brick, ball, paddle)
@@ -106,7 +98,7 @@ int main()
         bricks[i].setSize(sf::Vector2f(32, 12));
         bricks[i].setOutlineColor(sf::Color::Black);
         bricks[i].setOutlineThickness(1.f);
-    
+
         if (i == 0)
         {
             bricks[i].setPosition(0, 0);
@@ -191,7 +183,7 @@ int main()
 
     }
 
-    ball.setPosition(paddle.getPosition()); 
+    ball.setPosition(paddle.getPosition());
 
     //game loop:
     while(window.isOpen())
@@ -214,7 +206,7 @@ int main()
                             x_new = x_old + stepx;
                             paddle.setPosition(x_new,window.getSize().y - (30 + paddle.getSize().y));
                             break;
-                        
+
                         case sf::Keyboard::Left:
                             actualPos = paddle.getPosition();
                             x_old = actualPos.x;
@@ -227,16 +219,11 @@ int main()
             }
         }
 
-        // update the game
-        
-        
-        
-
         //FPS frame per second (Le nombre d'images par seconde)
         sf::Time time = clock.getElapsedTime();
         float fps = 1.0f / time.asSeconds();
 
-        text.setString( "FPS: "+std::to_string(fps) );
+        main_text.setString( "FPS: "+std::to_string(fps) );
 
         clock.restart().asSeconds();
 
@@ -269,25 +256,21 @@ int main()
 
             while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                text.setString("Game over ! \n Press space to continue");
-                text.setCharacterSize(30);
+                main_text.setString("Game over !\nPress space to continue");
+                /*text.setCharacterSize(30);
                 text.setStyle(sf::Text::Bold);
                 text.setFillColor(sf::Color::Magenta);
-                text.setPosition(120, 100);
-                window.draw(text);
+                text.setPosition(120, 100);*/
+                window.draw(main_text);
                 window.display();
             }
-            
         }
-        
 
         if(borderLeft.getGlobalBounds().intersects(ball.getGlobalBounds()))
             ballSpeed.x = - ballSpeed.x;
-        
 
         if(borderRight.getGlobalBounds().intersects(ball.getGlobalBounds()))
             ballSpeed.x = - ballSpeed.x;
-        
 
 
         /*
@@ -295,7 +278,6 @@ int main()
         */
         if(paddle.getGlobalBounds().intersects(ball.getGlobalBounds()))
             ballSpeed.y = -ballSpeed.y;
-        
 
         ball.move(ballSpeed.x, ballSpeed.y);
 
@@ -305,8 +287,7 @@ int main()
         for (int i = 0; i < 500; i++)
             window.draw(bricks[i]);
 
-        score.setString("Score: "+scoreStr);
-        
+        score_text.setString("Score: "+scoreStr);
 
         window.draw(borderTop);
         window.draw(borderBottom);
@@ -315,9 +296,9 @@ int main()
 
         window.draw(paddle);
         window.draw(ball);
-        window.draw(text);
-        window.draw(score);
-        
+        window.draw(main_text);
+        window.draw(score_text);
+
         window.display();
     }
 }
