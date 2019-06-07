@@ -1,8 +1,13 @@
 #include "Libs.hh"
+#include "GameEntity.hh"
+#include <memory>
 //#include "Text.hh"
 
 int main()
 {
+    //game instance:
+    std::unique_ptr<GameEntity> game(new GameEntity()); 
+
     //paddle props:
     float stepx = 10;
     float x_old, x_new, x_start, y_start;
@@ -19,7 +24,7 @@ int main()
     sf::Clock clock;
 
     // Text
-    sf::Text text;
+    sf::Text text, score;
     sf::Font font;  
 
     // Chargement du fichier .ttf
@@ -29,14 +34,21 @@ int main()
         return -1;
     }
 
-    // Configuration du texte (FPS)
+    // Config txt (FPS)
     text.setFont( font );
-    // in pixels, not points!
     text.setCharacterSize( 32 );
     text.setFillColor( sf::Color::White );
     text.setStyle( sf::Text::Style::Bold);
     text.setOutlineColor( sf::Color::Yellow );
     text.setPosition(5,5);
+
+    //config txt score:
+    score.setFont(font);
+    score.setCharacterSize(32);
+    score.setFillColor(sf::Color::White);
+    score.setStyle(sf::Text::Style::Bold);
+    score.setPosition(20, 20);
+    std::string scoreStr;
 
     //Create window
     sf::RenderWindow window(sf::VideoMode (644,480), "Brick breaker");
@@ -85,6 +97,7 @@ int main()
     borderTop.setSize(sf::Vector2f(640, 0.1));
     borderTop.setFillColor(sf::Color::White);
     borderTop.setPosition(sf::Vector2f(0,0));
+
 
     //fill the field with bricks
     for (unsigned i = 0; i < 500; i++)
@@ -237,6 +250,9 @@ int main()
 
                 bricks[i].setSize(sf::Vector2f(0,0)); 
                 i = 499;
+                game->setScore(5);
+                scoreStr = std::to_string(game->getScore());
+                score.setString("Score: "+scoreStr);
             }
         }
 
@@ -296,6 +312,7 @@ int main()
         window.draw(paddle);
         window.draw(ball);
         window.draw(text);
+        window.draw(score);
         
         window.display();
     }

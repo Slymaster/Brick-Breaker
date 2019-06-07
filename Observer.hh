@@ -1,3 +1,6 @@
+#include "Libs.hh"
+#include "GameEntity.hh"
+
 #ifndef OBSERVER_HH
 #define OBSERVER_HH
 
@@ -9,10 +12,23 @@
 
 class Observer
 {
-public:
-    virtual ~Observer();
-    virtual void update()=0;
-}
 
+protected:
+    GameEntity *game;
+
+public:
+    Observer(GameEntity *subject);
+    virtual void update()=0;
+
+};
+
+class TextObserver: public Observer
+{
+private :
+    sf::Text text;
+public:
+    TextObserver(GameEntity *game, sf::Text scoreTxt);
+    void update() override;
+};
 #endif
 // NEED OBSERVABLE
