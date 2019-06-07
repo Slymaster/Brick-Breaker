@@ -1,7 +1,7 @@
 #include "BallEntity.hh"
 
 //contructor:
-Ball(float posX, float posY)
+BallEntity::BallEntity(float posX, float posY)
 {
     ball.setPosition(posX, posY);
     ball.setRadius(20);
@@ -9,18 +9,16 @@ Ball(float posX, float posY)
     ball.setOrigin(radius, radius);
 }
 
-void Ball::update()
+void BallEntity::Update()
 {
     ball.move(trjVector);
 }
 
-void Ball::draw(sf::RenderWindow &window)
+void BallEntity::Draw(sf::RenderWindow &window)
 {
     window.draw(ball);
 }
 
-void Ball::~Ball() 
+void BallEntity::~BallEntity() 
 {
 }
-
-};

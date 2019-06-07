@@ -1,7 +1,7 @@
 #ifndef BALLENTITY_HH
 #define BALLENTITY_HH
 
-class Ball : public AbstractEntity
+class BallEntity : public Entity
 {
 public:
     static const sf::Color color;
@@ -11,10 +11,10 @@ public:
     sf::CircleShape shape;
     sf::Vector2f trjVector{-trajectory, -trajectory};
 
-    virtual void update() override;
-    virtual void draw(sf::RenderWindow &window) override;
+    virtual void Update() override;
+    virtual void Draw(sf::RenderWindow &window) override;
 
-    virtual ~Ball()=0;
+    virtual ~BallEntity()=0;
 };
 
 #endif
