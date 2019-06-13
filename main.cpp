@@ -8,6 +8,9 @@ int main()
     //game instance:
     std::unique_ptr<GameEntity> game(new GameEntity());
 
+    //number of bricks
+    const int nbBricks = 500;
+
     sf::Texture t1;
 
     t1.loadFromFile("asset/images/paddle.png");
@@ -54,7 +57,7 @@ int main()
     window.setPosition(sf::Vector2i(120,50));
 
     //Create entity (brick, ball, paddle)
-    sf::RectangleShape bricks[500];
+    sf::RectangleShape bricks[nbBricks];
     sf::CircleShape ball(10);
 
     //sf::RectangleShape paddle(sf::Vector2f(60, 10));
@@ -69,7 +72,7 @@ int main()
     // y_start = window.getSize().y - (30 + window.getSize().y);
 
     x_start = (window.getSize().x / 2);
-    y_start = (window.getSize().y / 2);
+    y_start = (window.getSize().y - 30);
 
     paddle.setPosition(x_start, y_start);
     ball.setPosition(x_ini, y_ini);
@@ -101,7 +104,7 @@ int main()
 
 
     //fill the field with bricks
-    for (unsigned i = 0; i < 500; i++)
+    for (unsigned i = 0; i < nbBricks; i++)
     {
         bricks[i].setFillColor(sf::Color::Blue);
         bricks[i].setSize(sf::Vector2f(32, 12));
@@ -185,7 +188,7 @@ int main()
         {
             bricks[i].setPosition(0, 96+bricks[i].getSize().y);
         }
-        else if (i > 450 && i < 500)
+        else if (i > 450 && i < nbBricks)
         {
             bricks[i].setPosition(bricks[i-1].getPosition().x + bricks[i].getSize().x, bricks[i-1].getPosition().y);
         }
@@ -210,7 +213,7 @@ int main()
                     switch(Event.key.code)
                     {
                         case sf::Keyboard::Right:
-                            paddle.move(30,0);
+                            paddle.move(6,0);
                             /*actualPos = paddle.getPosition();
                             x_old = actualPos.x;
                             x_new = x_old + stepx;
@@ -218,7 +221,7 @@ int main()
                             break;
 
                         case sf::Keyboard::Left:
-                            paddle.move(-30,0);
+                            paddle.move(-6,0);
                             /*actualPos = paddle.getPosition();
                             x_old = actualPos.x;
                             x_new = x_old - stepx;
@@ -240,14 +243,14 @@ int main()
 
         window.clear();
         //Detect ball and brick collision
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < nbBricks; i++)
         {
             if(bricks[i].getGlobalBounds().intersects(ball.getGlobalBounds()))
             {
                 ballSpeed.y = -ballSpeed.y; 
 
                 bricks[i].setSize(sf::Vector2f(0,0)); 
-                i = 499;
+                i = nbBricks-1;
                 game->setScore(5);
                 scoreStr = std::to_string(game->getScore());
             }
@@ -295,7 +298,7 @@ int main()
         window.clear();
 
 
-        for (int i = 0; i < 500; i++)
+        for (int i = 0; i < nbBricks; i++)
             window.draw(bricks[i]);
 
         score_text.setString("Score: "+scoreStr);
