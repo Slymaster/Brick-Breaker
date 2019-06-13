@@ -8,6 +8,12 @@ int main()
     //game instance:
     std::unique_ptr<GameEntity> game(new GameEntity());
 
+    sf::Texture t1;
+
+    t1.loadFromFile("asset/images/paddle.png");
+
+    sf::Sprite paddle(t1);
+
     //paddle props:
     float stepx = 10;
     float x_old, x_new, x_start, y_start;
@@ -51,16 +57,19 @@ int main()
     sf::RectangleShape bricks[500];
     sf::CircleShape ball(10);
 
-    sf::RectangleShape paddle(sf::Vector2f(60, 10));
+    //sf::RectangleShape paddle(sf::Vector2f(60, 10));
 
-    paddle.setFillColor(sf::Color::Blue);
+    //paddle.setFillColor(sf::Color::Blue);
     ball.setFillColor(sf::Color::Red);
 
     //Set start position of paddle and ball
     x_ini = paddle.getPosition().x;
     y_ini = paddle.getPosition().y - 30;
-    x_start = (window.getSize().x / 2) - (paddle.getSize().x / 2);
-    y_start = window.getSize().y - (30 + paddle.getSize().y);
+    // x_start = (window.getSize().x / 2) - (window.getSize().x / 2);
+    // y_start = window.getSize().y - (30 + window.getSize().y);
+
+    x_start = (window.getSize().x / 2);
+    y_start = (window.getSize().y / 2);
 
     paddle.setPosition(x_start, y_start);
     ball.setPosition(x_ini, y_ini);
