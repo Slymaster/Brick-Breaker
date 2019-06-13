@@ -201,17 +201,19 @@ int main()
                     switch(Event.key.code)
                     {
                         case sf::Keyboard::Right:
-                            actualPos = paddle.getPosition();
+                            paddle.move(30,0);
+                            /*actualPos = paddle.getPosition();
                             x_old = actualPos.x;
                             x_new = x_old + stepx;
-                            paddle.setPosition(x_new,window.getSize().y - (30 + paddle.getSize().y));
+                            paddle.setPosition(x_new,window.getSize().y - (30 + paddle.getSize().y));*/
                             break;
 
                         case sf::Keyboard::Left:
-                            actualPos = paddle.getPosition();
+                            paddle.move(-30,0);
+                            /*actualPos = paddle.getPosition();
                             x_old = actualPos.x;
                             x_new = x_old - stepx;
-                            paddle.setPosition(x_new,window.getSize().y - (30 + paddle.getSize().y));
+                            paddle.setPosition(x_new,window.getSize().y - (30 + paddle.getSize().y));*/
                             break;
 
                     }
